@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import type http from "http";
 import { CUSTOM_URL_SCHEME, SWA_CLI_APP_PROTOCOL } from "../constants.js";
-import { swaCLIEnv } from "../env.js";
 
 const SENSITIVE_KEYS = ["DEPLOYMENT_TOKEN", "SWA_CLI_DEPLOYMENT_TOKEN", "--deployment-token", "deploymentToken"];
 
@@ -60,7 +59,7 @@ export const logger = {
    * @param exit If set to True, the CLI instance will be terminated after printing the error message (code -1).
    */
   error(data: string | object, exit = false) {
-    const { SWA_CLI_DEBUG } = swaCLIEnv();
+    const { SWA_CLI_DEBUG } = process.env;
     if (SWA_CLI_DEBUG?.includes("silent")) {
       return;
     }
@@ -79,7 +78,7 @@ export const logger = {
    * @param color (optional) A valid Chalk color to be used when printing logs.
    */
   silly(data: string | object, prefix: string | null = null, debugFilter: DebugFilterLevel = "silly", color: chalk.Chalk = chalk.magenta) {
-    const { SWA_CLI_DEBUG } = swaCLIEnv();
+    const { SWA_CLI_DEBUG } = process.env;
     if (!SWA_CLI_DEBUG || SWA_CLI_DEBUG?.includes("silent")) {
       return;
     }
